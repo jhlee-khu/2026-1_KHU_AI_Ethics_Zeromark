@@ -115,12 +115,7 @@ Even though the real gradients are unavailable in the black-box setting, the met
 
 The estimated boundary gradient is:
 
-$$
-\nabla_x \phi_y(x^{*}; w)
-\approx
-\frac{1}{N}\sum_{i=1}^{N}
-\phi_y(x^{*} + \kappa \mu_i; w)\,\mu_i
-$$
+![term1](./math1.png)
 
 ## Step 3: Analyze Similarity with the Watermark Pattern
 
@@ -128,30 +123,11 @@ Finally, ZeroMark compares the estimated boundary gradients with the dataset own
 
 The paper normalizes the cosine similarity by comparing the real watermark pattern $\delta$ with random watermark patterns $\delta_i$:
 
-$$
-\overline{s}
-=
-\frac{1}{N}\sum_{i=1}^{N}
-\operatorname{cos}\!\left(
-m \odot \delta_i,\;
-m \odot \nabla_x \phi_{y_t}(x^{*}; w)
-\right)
-$$
+![term2](./math2.png)
 
 Then it computes the normalized cosine similarity score:
 
-$$
-\widehat{s}
-=
-\frac{
-\operatorname{cos}\!\left(
-m \odot \delta,\;
-m \odot \nabla_x \phi_{y_t}(x^{*}; w)
-\right)
-}{
-\overline{s}
-}
-$$
+![term3](./math3.png)
 
 Here, $m$ is the watermark mask, $\delta$ is the real watermark pattern, and $y_t$ is the watermark target label.
 
