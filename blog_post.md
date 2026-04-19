@@ -116,38 +116,44 @@ Even though the real gradients are unavailable in the black-box setting, the met
 The estimated boundary gradient is:
 
 $$
-\nabla_x \phi_y(x^*; w)
+\nabla_x \phi_y(x^{*}; w)
 \approx
 \frac{1}{N}\sum_{i=1}^{N}
-\phi_y(x^* + \kappa \mu_i; w)\mu_i
+\phi_y(x^{*} + \kappa \mu_i; w)\,\mu_i
 $$
 
-### Step 3: Analyze Similarity with the Watermark Pattern
+## Step 3: Analyze Similarity with the Watermark Pattern
 
 Finally, ZeroMark compares the estimated boundary gradients with the dataset owner's known watermark pattern. It calculates cosine similarity scores and normalizes them using random watermark patterns as references.
 
-The paper normalizes the cosine similarity by comparing the real watermark pattern \(\delta\) with random watermark patterns \(\delta_i\):
+The paper normalizes the cosine similarity by comparing the real watermark pattern $\delta$ with random watermark patterns $\delta_i$:
 
 $$
-\overline{\cos}
+\overline{s}
 =
-\frac{1}{N}
-\sum_{i=1}^{N}
-\cos \angle
-(m \odot \delta_i, m \odot \nabla_x \phi_{y_t}(x^*; w))
+\frac{1}{N}\sum_{i=1}^{N}
+\operatorname{cos}\!\left(
+m \odot \delta_i,\;
+m \odot \nabla_x \phi_{y_t}(x^{*}; w)
+\right)
 $$
 
 Then it computes the normalized cosine similarity score:
 
 $$
-\widehat{\cos}
+\widehat{s}
 =
-\cos \angle
-(m \odot \delta, m \odot \nabla_x \phi_{y_t}(x^*; w))
-- \overline{\cos}
+\frac{
+\operatorname{cos}\!\left(
+m \odot \delta,\;
+m \odot \nabla_x \phi_{y_t}(x^{*}; w)
+\right)
+}{
+\overline{s}
+}
 $$
 
-Here, \(m\) is the watermark mask, \(\delta\) is the real watermark pattern, and \(y_t\) is the watermark target label.
+Here, $m$ is the watermark mask, $\delta$ is the real watermark pattern, and $y_t$ is the watermark target label.
 
 If the suspicious model was trained on the protected dataset, the similarity for the watermark target label should be significantly higher than for benign labels. ZeroMark then uses a hypothesis test to decide whether the model is likely to have used the protected dataset.
 
